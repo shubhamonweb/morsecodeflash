@@ -162,7 +162,10 @@ public class MainActivity extends ActionBarActivity {
         params.setFlashMode(Parameters.FLASH_MODE_TORCH);
         camera.setParameters(params);
         camera.startPreview();
+
         isflashon = true;
+
+
      }
 
      @SuppressWarnings("deprecation")
