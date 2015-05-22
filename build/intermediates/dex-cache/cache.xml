@@ -2,6 +2,20 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\pre-dexed\debug\classes-4c561c7c8c95159ee97973b3cf24280e1b23dca4.jar" />
+    </item>
+    <item
+        jar="C:\Users\Shubham\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-00c0ef6b1570a143c7cf9da074109d782b40ca1b.jar" />
+    </item>
+    <item
         jar="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -14,20 +28,6 @@
         revision="22.0.1"
         sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
         <dex dex="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\pre-dexed\debug\classes-29ad7f6e72084eec4e92b26f3d5432ef506b699c.jar" />
-    </item>
-    <item
-        jar="C:\Users\Shubham\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-00c0ef6b1570a143c7cf9da074109d782b40ca1b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="C:\Users\Shubham\AndroidStudioProjects\morsecodeflash\app\build\intermediates\pre-dexed\debug\classes-4c561c7c8c95159ee97973b3cf24280e1b23dca4.jar" />
     </item>
 
 </items>
