@@ -19,16 +19,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Hashtable;
 
 
 public class MainActivity extends ActionBarActivity implements SurfaceHolder.Callback {
-	 private Camera camera;
+    private Camera camera;
 	 private Parameters params;
 	 private final Context context = this;
 	 private boolean isflashon = false;
 	 private long timeUnit = 60;
      public static SurfaceView preview;
      public static SurfaceHolder mHolder;
+     private Hashtable<String, String> morseMap;
 
     @SuppressWarnings("deprecation")
 	@Override
