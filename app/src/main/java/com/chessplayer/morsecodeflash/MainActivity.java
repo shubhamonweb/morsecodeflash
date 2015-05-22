@@ -1,5 +1,6 @@
 package com.chessplayer.morsecodeflash;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,14 +24,17 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 
-public class MainActivity extends ActionBarActivity implements SurfaceHolder.Callback {
+public class MainActivity extends Activity {
+    public static SurfaceView preview;
     private Camera camera;
-	 private Parameters params;
-	 private final Context context = this;
-	 private boolean isflashon = false;
-	 private long timeUnit = 60;
-     public static SurfaceView preview;
-     public static SurfaceHolder mHolder;
+
+	 Camera.Parameters params;
+    SurfaceHolder mHolder = null;
+    SurfaceHolder.Callback sh_callback = null;
+
+    private final Context context = this;
+    private boolean isflashon = false;
+    private long timeUnit = 60;
      private Hashtable<String, String> morseMap;
 
     @SuppressWarnings("deprecation")
@@ -37,10 +42,15 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        preview=(SurfaceView)findViewById(R.id.PREVIEW);
-        mHolder=preview.getHolder();
-        mHolder.addCallback(this);
+//      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        preview = new SurfaceView(getApplicationContext());
+        addContentView(preview, new LayoutParams(1, 1));
+        if (mHolder == null) {
+            mHolder = preview.getHolder();
+        }
+        sh_callback = my_callback();
+//        mHolder = preview.getHolder();
+        mHolder.addCallback(sh_callback);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         mHolder.setFixedSize(getWindow().getWindowManager()
                 .getDefaultDisplay().getWidth(), getWindow().getWindowManager()
@@ -72,7 +82,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 //                camera = Camera.open();
 //                params = camera.getParameters();
 //            } catch (RuntimeException e) {
-//                Log.e("Camera Error. Failed to Open. Error: ", e.getMessage());
+//                Log.e("Camera Error", e.getMessage());
 //            }
 //        }
         final TextView text = (TextView) findViewById(R.id.text);
@@ -92,10 +102,9 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
             }
         });
     }
-    
+
     public void letsFlash(final String text) {
     	new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 		         String selectedChar;
@@ -174,7 +183,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 
     @SuppressWarnings("deprecation")
 	private void setFlashlightOn() {
-        params = camera.getParameters();
+        // params = camera.getParameters();
         params.setFlashMode(Parameters.FLASH_MODE_TORCH);
         camera.setParameters(params);
         camera.startPreview();
@@ -186,10 +195,10 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 
      @SuppressWarnings("deprecation")
 	private void setFlashlightOff() {
-    	 params = camera.getParameters();
+    	// params = camera.getParameters();
          params.setFlashMode(Parameters.FLASH_MODE_OFF);
          camera.setParameters(params);
-         camera.stopPreview();
+         camera.startPreview();
          isflashon = false;
      }
     @Override
@@ -425,25 +434,48 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
  
         return newText;
     }
+    SurfaceHolder.Callback my_callback() {
+        SurfaceHolder.Callback ob1 = new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {                //Releases the camera when the app is not in use(onPause, onDestroy etc.)
+//                camera.stopPreview();
+                camera.release();
+                camera = null;
+            }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        mHolder = holder;
-        try {
-            camera.setPreviewDisplay(mHolder);
-        } catch (java.io.IOException e) {
-
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {                  //Gets the camera when the app is to be (re)initialized(onResume, onCreate etc.)
+         if (camera == null) {
+            try {
+                camera = Camera.open();
+                params = camera.getParameters();
+            } catch (RuntimeException e) {
+                Log.e("Camera Error", e.getMessage());
+            }
         }
+
+              //  camera = Camera.open();
+
+                try {
+                    camera.setPreviewDisplay(holder);                          //Attaches a preview view to the camera. This is neccesary for some specific models(Samsung among others)
+                } catch (IOException exception) {
+                    camera.release();
+                    camera = null;
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width,//Initializes the flash. In this app, this method is called straight after surfaceCreated due
+                                       int height) {                                                   //to the screen orientation lock. Default state is off and not locked.
+                params = camera.getParameters();
+                params.setFlashMode(Parameters.FLASH_MODE_OFF);
+                camera.setParameters(params);
+                camera.startPreview();
+//                lightToggle = false;
+//                screenLock = false;
+            }
+        };
+        return ob1;
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.stopPreview();
-        mHolder = null;
-    }
 }
