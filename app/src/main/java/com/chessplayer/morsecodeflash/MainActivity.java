@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         final PackageManager pm = context.getPackageManager();
         boolean hasFlash = getApplicationContext().getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH); //checks if it has camera
          
         if (!hasFlash) {
             // device doesn't support flash
