@@ -1511,6 +1511,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02003b;
     }
     public static final class id {
+        public static final int PREVIEW=0x7f0b0052;
         public static final int action_bar=0x7f0b0040;
         public static final int action_bar_activity_content=0x7f0b0000;
         public static final int action_bar_container=0x7f0b003f;
@@ -1524,7 +1525,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0b003d;
         public static final int action_mode_bar_stub=0x7f0b003c;
         public static final int action_mode_close_button=0x7f0b0025;
-        public static final int action_settings=0x7f0b0052;
+        public static final int action_settings=0x7f0b0053;
         public static final int activity_chooser_view_content=0x7f0b0026;
         public static final int alertTitle=0x7f0b0030;
         public static final int always=0x7f0b0016;

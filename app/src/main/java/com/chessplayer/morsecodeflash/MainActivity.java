@@ -1,39 +1,53 @@
 package com.chessplayer.morsecodeflash;
 
-import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.media.AudioTrack;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends ActionBarActivity implements SurfaceHolder.Callback {
 	 private Camera camera;
 	 private Parameters params;
 	 private final Context context = this;
 	 private boolean isflashon = false;
 	 private long timeUnit = 60;
+     public static SurfaceView preview;
+     public static SurfaceHolder mHolder;
 
     @SuppressWarnings("deprecation")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        preview=(SurfaceView)findViewById(R.id.PREVIEW);
+        mHolder=preview.getHolder();
+        mHolder.addCallback(this);
+        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        mHolder.setFixedSize(getWindow().getWindowManager()
+                .getDefaultDisplay().getWidth(), getWindow().getWindowManager()
+                .getDefaultDisplay().getHeight());
+
+
         final PackageManager pm = context.getPackageManager();
         boolean hasFlash = getApplicationContext().getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH); //checks if it has camera
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
          
         if (!hasFlash) {
             // device doesn't support flash
@@ -183,13 +197,13 @@ public class MainActivity extends ActionBarActivity {
     }
     @Override
     public void onResume() {
-    	super.onResume();
+        super.onResume();
         if (camera == null) {
             try {
                 camera = Camera.open();
                 params = camera.getParameters();
             } catch (RuntimeException e) {
-                Log.e("Camera failed to Open. ", e.getMessage());
+                Log.e("Camera failed to Open: ", e.getMessage());
             }
         }
     }
@@ -408,5 +422,26 @@ public class MainActivity extends ActionBarActivity {
         }
  
         return newText;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        mHolder = holder;
+        try {
+            camera.setPreviewDisplay(mHolder);
+        } catch (java.io.IOException e) {
+
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        camera.stopPreview();
+        mHolder = null;
     }
 }

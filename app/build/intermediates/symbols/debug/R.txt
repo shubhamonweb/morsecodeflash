@@ -404,6 +404,7 @@ int drawable abc_textfield_search_activated_mtrl_alpha 0x7f020038
 int drawable abc_textfield_search_default_mtrl_alpha 0x7f020039
 int drawable abc_textfield_search_material 0x7f02003a
 int drawable ic_launcher 0x7f02003b
+int id PREVIEW 0x7f0b0052
 int id action_bar 0x7f0b0040
 int id action_bar_activity_content 0x7f0b0000
 int id action_bar_container 0x7f0b003f
@@ -417,7 +418,7 @@ int id action_menu_presenter 0x7f0b0003
 int id action_mode_bar 0x7f0b003d
 int id action_mode_bar_stub 0x7f0b003c
 int id action_mode_close_button 0x7f0b0025
-int id action_settings 0x7f0b0052
+int id action_settings 0x7f0b0053
 int id activity_chooser_view_content 0x7f0b0026
 int id alertTitle 0x7f0b0030
 int id always 0x7f0b0016
